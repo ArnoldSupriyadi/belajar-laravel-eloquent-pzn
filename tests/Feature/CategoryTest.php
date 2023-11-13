@@ -27,13 +27,14 @@ class CategoryTest extends TestCase
         self::assertTrue($result);
     }
 
-    public function testInsertManyCategories()
+    public function testInsertMany()
     {
         $categories = [];
         for($i = 0; $i < 10; $i++) {
             $categories[] = [
                 'id' => "ID $i",
-                'name' => "Name $i"
+                'name' => "Name $i",
+                'is_active' => true
             ];
         }
 
@@ -75,16 +76,17 @@ class CategoryTest extends TestCase
 
     public function testSelect()
     {
-        for($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $category = new Category();
-            $category->id = "$i";
-            $category->name = "Category $i";
+            $category->id = "ID $i";
+            $category->name = "Name $i";
+            $category->is_active = true;
             $category->save();
         }
 
-        $categories = Category::query()->whereNull("description")->get();
+        $categories = Category::whereNull("description")->get();
         self::assertEquals(5, $categories->count());
-        $categories->each(function ($category){
+        $categories->each(function ($category) {
             self::assertNull($category->description);
 
             $category->description = "Updated";
@@ -98,7 +100,8 @@ class CategoryTest extends TestCase
         for($i = 0; $i < 10; $i++) {
             $categories[] = [
                 'id' => "ID $i",
-                'name' => "Name $i"
+                'name' => "Name $i",
+                'is_active' => true
             ];
         }
 
@@ -132,7 +135,8 @@ class CategoryTest extends TestCase
         for($i = 0; $i < 10; $i++) {
             $categories[] = [
                 'id' => "ID $i",
-                'name' => "Name $i"
+                'name' => "Name $i",
+                'is_active' => true
             ];
         }
 
@@ -140,7 +144,7 @@ class CategoryTest extends TestCase
         self::assertTrue($result);
 
         $total = Category::count();
-        assertEquals(10, $total);
+        self::assertEquals(10, $total);
 
         Category::whereNull("description")->delete();
 
@@ -192,4 +196,21 @@ class CategoryTest extends TestCase
 
         self::assertNotNull($category->id);
     }
+
+    // public function testGlobalScope()
+    // {
+    //     $category = new Category();
+    //     $category->id = "FOOD";
+    //     $category->name = "Food";
+    //     $category->description = "Food Category";
+    //     $category->is_active = false;
+    //     $category->save();
+
+    //     $category = Category::find("FOOD");
+    //     self::assertNull($category);
+
+    //     $category = Category::withoutGlobalScopes([IsActiveScope::class])->find("FOOD");
+    //     self::assertNotNull($category);
+
+    // }
 }

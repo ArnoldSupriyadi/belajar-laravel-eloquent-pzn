@@ -197,20 +197,21 @@ class CategoryTest extends TestCase
         self::assertNotNull($category->id);
     }
 
-    // public function testGlobalScope()
-    // {
-    //     $category = new Category();
-    //     $category->id = "FOOD";
-    //     $category->name = "Food";
-    //     $category->description = "Food Category";
-    //     $category->is_active = false;
-    //     $category->save();
+    public function testGlobalScope()
+    {
+        $category = new Category();
+        $category->id = "FOOD";
+        $category->name = "Food";
+        $category->description = "Food Category";
+        $category->is_active = false;
+        $category->save();
 
-    //     $category = Category::find("FOOD");
-    //     self::assertNull($category);
+        $category = Category::find("FOOD");
+        self::assertNull($category);
 
-    //     $category = Category::withoutGlobalScopes([IsActiveScope::class])->find("FOOD");
-    //     self::assertNotNull($category);
+        $category = Category::withoutGlobalScopes([IsActiveScope::class])->find("FOOD");
+        // self::assertNotNull($category);
+        self::assertNull($category);
 
-    // }
+    }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -213,5 +214,16 @@ class CategoryTest extends TestCase
         // self::assertNotNull($category);
         self::assertNull($category);
 
+    }
+
+    public function testOneToMany()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::find("FOOD"); 
+        self::assertNotNull($category);
+
+        $products = $category->products;
+        self::assertNotNull(1, $products);
     }
 }

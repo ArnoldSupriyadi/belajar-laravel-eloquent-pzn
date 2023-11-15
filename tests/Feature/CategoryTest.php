@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
+use App\Models\Product;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -225,5 +226,24 @@ class CategoryTest extends TestCase
 
         $products = $category->products;
         self::assertNotNull(1, $products);
+    }
+
+    public function tesOneToManyQuery()
+    {
+        $category = new Category();
+        $category->id = "FOOD";
+        $category->name = "Food";
+        $category->description = "Food Category";
+        $category->is_active = true;
+        $category->save();
+
+        $product = new Product();
+        $product->id = "1";
+        $product->name = "Product 1";
+        $product->description = "Description 1";
+        
+        $category->products()->save($product);
+
+        self::assertNotNull($product->category_id);
     }
 }

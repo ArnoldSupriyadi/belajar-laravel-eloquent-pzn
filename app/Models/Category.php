@@ -37,7 +37,7 @@ class Category extends Model
 
     public function cheapestProduct(): HasOne
     {
-        return $this->hasOne(Product::class, 'category_id','id')->oldest('price');
+        return $this->hasOne(Product::class, "category_id", "id")->oldest("price");
     }
 
     public function mostExpensiveProduct(): HasOne

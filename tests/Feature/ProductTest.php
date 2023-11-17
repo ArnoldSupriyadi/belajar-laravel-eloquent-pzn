@@ -34,9 +34,9 @@ class ProductTest extends TestCase
         $category = Category::find("FOOD");
         self::assertNotNull($category);
 
-        $cheapsetProduct = $category->cheapestProduct;
-        self::assertNotNull($cheapsetProduct);
-        self::assertEquals("1", $cheapsetProduct->id);
+        $cheapestProduct = $category->cheapestProduct;
+        self::assertNotNull($cheapestProduct);
+        self::assertEquals("1", $cheapestProduct->id);
 
         $mostExpensiveProduct = $category->mostExpensiveProduct;
         self::assertNotNull($mostExpensiveProduct);

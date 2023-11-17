@@ -42,6 +42,6 @@ class Category extends Model
 
     public function mostExpensiveProduct(): HasOne
     {
-        return $this->hasOne(Product::class, 'category', 'id')->latest('price');
+        return $this->hasOne(Product::class, "category_id", "id")->latest("price");
     }
 }

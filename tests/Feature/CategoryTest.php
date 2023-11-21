@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Product;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\CustomerSeeder;
 use Database\Seeders\ProductSeeder;
+use Database\Seeders\ReviewSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -257,5 +259,17 @@ class CategoryTest extends TestCase
 
         $outOfStockProducts = $category->products()->where('stock', '<=', 0)->get();
         self::assertCount(2, $outOfStockProducts);
+    }
+
+    public function testHasManyThrough()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, CustomerSeeder::class, ReviewSeeder::class]);
+
+        $category = Category::find("FOOD");
+        self::assertNotNull($category);
+
+        $reviews = $category->reviews;
+        self::assertNotNull($reviews);
+        self::assertCount(2, $reviews);
     }
 }

@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use App\Models\Customer;
 use App\Models\VirtualAccount;
 use App\Models\Wallet;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\CustomerSeeder;
+use Database\Seeders\ProductSeeder;
 use Database\Seeders\VirtualAccountSeeder;
 use Database\Seeders\WalletSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -55,5 +57,20 @@ class CustomerTest extends TestCase
         $virtualAccount = $customer->virtualAccount;
         self::assertNotNull($virtualAccount);
         self::assertEquals("BCA", $virtualAccount->bank);
+    }
+
+    public function testManyToMany()
+    {
+        $this->seed([CustomerSeeder::class, CategorySeeder::class, ProductSeeder::class]);
+
+        $customer = Customer::find("EKO");
+        self::assertNotNull($customer);
+
+        $customer->likeProducts()->attach("1");
+
+        $products = $customer->likeProducts;
+        self::assertCount(1, $products);
+
+        self::assertEquals("1", $products[0]->id);   
     }
 }

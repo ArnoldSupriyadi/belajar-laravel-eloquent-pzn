@@ -119,4 +119,23 @@ class CustomerTest extends TestCase
         }
     }
 
+    public function testPivotModel()
+    {
+        $this->testManyToMany();
+
+        $customer = customer::find("EKO");
+        $products = $customer->likeProductsLastWeek;
+
+        foreach ($products as $product)
+        {
+            $pivot = $product->pivot; //object model like
+            self::assertNotNull($pivot);
+
+            $customer = $pivot->customer;
+            self::assertNotNull($customer);
+
+            $product = $pivot->product;
+            self::assertNotNull($product);
+        }
+    }
 }

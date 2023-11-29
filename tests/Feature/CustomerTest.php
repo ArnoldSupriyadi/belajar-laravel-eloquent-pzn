@@ -7,6 +7,7 @@ use App\Models\VirtualAccount;
 use App\Models\Wallet;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\CustomerSeeder;
+use Database\Seeders\ImageSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\VirtualAccountSeeder;
 use Database\Seeders\WalletSeeder;
@@ -14,6 +15,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotNull;
 
 class CustomerTest extends TestCase
@@ -137,5 +139,18 @@ class CustomerTest extends TestCase
             $product = $pivot->product;
             self::assertNotNull($product);
         }
+    }
+
+    public function testOneToOnePolymorphic()
+    {
+        $this->seed([CustomerSeeder::class, ImageSeeder::class]);
+
+        $customer = Customer::find("EKO");
+        self::assertNotNull($customer);
+
+        $image = $customer->image;
+        self::assertNotNull($image);
+
+        self::assertEquals("https://unsplash.com/photos/a-man-in-an-apron-is-holding-a-bunch-of-bananas-XfiTptJ4DPY", $image->url);
     }
 }

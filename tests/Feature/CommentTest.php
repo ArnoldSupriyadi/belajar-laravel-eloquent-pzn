@@ -14,10 +14,11 @@ class CommentTest extends TestCase
     public function testCreateComment()
     {
         $comment = new Comment();
-        $comment->email = "arnold@pzn.com";
+        $comment->email = "eko@pzn.com";
         $comment->title = "Sample Title";
         $comment->comment = "Sample Comment";
-
+        $comment->commentable_id = '1';
+        $comment->commentable_type = 'product';
         $comment->save();
 
         self::assertNotNull($comment->id);
@@ -26,9 +27,11 @@ class CommentTest extends TestCase
     public function testDefaultAttributeValues()
     {
         $comment = new Comment();
-        $comment->email = "arnold@pzn.com";
+        $comment->email = "eko@pzn.com";
         $comment->title = "Sample Title";
         $comment->comment = "Sample Comment";
+        $comment->commentable_id = '1';
+        $comment->commentable_type = 'product';
 
         $comment->save();
 

@@ -6,8 +6,10 @@ use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\CommentSeeder;
 use Database\Seeders\ImageSeeder;
 use Database\Seeders\ProductSeeder;
+use Database\Seeders\VoucherSeeder;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -62,5 +64,33 @@ class ProductTest extends TestCase
         self::assertNotNull($image);
 
         self::assertEquals("https://unsplash.com/photos/a-living-room-with-a-piano-and-chairs-m4MzJvXNxJ0", $image->url);
+    }
+
+    public function testOneToManyPolymorphic()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, CommentSeeder::class]);
+
+        $product = Product::find("1");
+        self::assertNotNull($product);
+
+        $comments = $product->comments;
+        foreach ($comments as $comment){
+            self::assertEquals("product", $comment->commentable_type);
+            self::assertEquals($product->id, $comment->commentable_id);
+        }
+    }
+
+    public function testOneOfManyPolymorphic()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, CommentSeeder::class]);
+
+        $product = Product::find("1");
+        self::assertNotNull($product);
+
+        $comment = $product->latestComment;
+        self::assertNotNull($comment);
+
+        $comment = $product->oldestComment;
+        self::assertNotNull($comment);
     }
 }

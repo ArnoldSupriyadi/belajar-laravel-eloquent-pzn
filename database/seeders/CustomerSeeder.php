@@ -16,7 +16,7 @@ class CustomerSeeder extends Seeder
         $customer = new Customer();
         $customer->id = "EKO";
         $customer->name = "Eko";
-        $customer->email = "Eko@pzn.com";
+        $customer->email = "eko@pzn.com";
         $customer->save();
     }
 }

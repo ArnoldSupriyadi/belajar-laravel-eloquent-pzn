@@ -19,7 +19,7 @@ class ImageSeeder extends Seeder
             $image = new Image();
             $image->url = "https://unsplash.com/photos/a-man-in-an-apron-is-holding-a-bunch-of-bananas-XfiTptJ4DPY";
             $image->imageable_id = "EKO";
-            $image->imageable_type = Customer::class;
+            $image->imageable_type = 'customer';
             $image->save();
         }
 
@@ -27,7 +27,7 @@ class ImageSeeder extends Seeder
             $image = new Image();
             $image->url = "https://unsplash.com/photos/a-living-room-with-a-piano-and-chairs-m4MzJvXNxJ0";
             $image->imageable_id = "1";
-            $image->imageable_type = Product::class;
+            $image->imageable_type = 'product';
             $image->save();
         }
     }

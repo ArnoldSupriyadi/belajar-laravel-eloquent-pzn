@@ -83,12 +83,12 @@ class ProductTest extends TestCase
         self::assertNotNull($product);
 
         $comment = $product->latestComment;
-        // self::assertNotNull($comment); ini harusnya bener tetapi ada kendaala error nanti diperbaiki
-        self::assertNull($comment);
+        //\\ self::assertNotNull($comment); ini harusnya bener tetapi ada kendaala error nanti diperbaiki
+        self::assertNotNull($comment);
 
         $comment = $product->oldestComment;
         // self::assertNotNull($comment); ini harusnya bener tetapi ada kendaala error nanti diperbaiki
-        self::assertNull($comment);
+        self::assertNotNull($comment);
     }
 
     public function testManyToManyPolymorphic()

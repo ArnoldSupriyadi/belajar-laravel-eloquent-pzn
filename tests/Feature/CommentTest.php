@@ -7,8 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-use function PHPUnit\Framework\assertNotNull;
-
 class CommentTest extends TestCase
 {
     public function testCreateComment()
@@ -19,17 +17,17 @@ class CommentTest extends TestCase
         $comment->comment = "Sample Comment";
         $comment->commentable_id = '1';
         $comment->commentable_type = 'product';
+
         $comment->save();
 
         self::assertNotNull($comment->id);
+
     }
 
     public function testDefaultAttributeValues()
     {
         $comment = new Comment();
         $comment->email = "eko@pzn.com";
-        $comment->title = "Sample Title";
-        $comment->comment = "Sample Comment";
         $comment->commentable_id = '1';
         $comment->commentable_type = 'product';
 
@@ -39,4 +37,6 @@ class CommentTest extends TestCase
         self::assertNotNull($comment->title);
         self::assertNotNull($comment->comment);
     }
+
+
 }

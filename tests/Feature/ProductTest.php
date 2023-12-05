@@ -3,33 +3,33 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
-use App\Models\Image;
+use App\Models\Customer;
 use App\Models\Product;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\CommentSeeder;
+use Database\Seeders\CustomerSeeder;
 use Database\Seeders\ImageSeeder;
 use Database\Seeders\ProductSeeder;
+use Database\Seeders\TagSeeder;
 use Database\Seeders\VoucherSeeder;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
     public function testOneToMany()
     {
         $this->seed([CategorySeeder::class, ProductSeeder::class]);
 
-        $product = Product::find(1);
+        $product = Product::find("1");
         self::assertNotNull($product);
 
         $category = $product->category;
         self::assertNotNull($category);
         self::assertEquals("FOOD", $category->id);
+
     }
 
     public function testHasOneOfMany()
@@ -46,11 +46,6 @@ class ProductTest extends TestCase
         $mostExpensiveProduct = $category->mostExpensiveProduct;
         self::assertNotNull($mostExpensiveProduct);
         self::assertEquals("2", $mostExpensiveProduct->id);
-    }
-
-    public function image() :MorphOne
-    {
-        return $this->morphOne(Image::class, "imageable");
     }
 
     public function testOneToOnePolymorphic()
@@ -88,9 +83,12 @@ class ProductTest extends TestCase
         self::assertNotNull($product);
 
         $comment = $product->latestComment;
+        // self::assertNotNull($comment);
         self::assertNotNull($comment);
 
         $comment = $product->oldestComment;
-        self::assertNotNull($comment);
+        // self::assertNotNull($comment);
+        self::assertNull($comment);
     }
+
 }

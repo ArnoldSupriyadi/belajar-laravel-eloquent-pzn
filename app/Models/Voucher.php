@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Voucher extends Model
 {
@@ -16,7 +17,7 @@ class Voucher extends Model
     protected $table = "vouchers";
     protected $primaryKey = "id";
     protected $keyType = "string";
-    public $incerementing = false;
+    public $incrementing = false;
     public $timestamps = false;
 
     public function uniqueIds(): array
@@ -37,5 +38,10 @@ class Voucher extends Model
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, "commentable");
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, "taggable");
     }
 }

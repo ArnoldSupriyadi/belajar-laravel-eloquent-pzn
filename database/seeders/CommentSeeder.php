@@ -19,7 +19,7 @@ class CommentSeeder extends Seeder
         $this->createCommentsForVoucher();
     }
 
-    private function createCommentsForProduct() :void
+    private function createCommentsForProduct() : void
     {
         $product = Product::find("1");
 
@@ -31,7 +31,7 @@ class CommentSeeder extends Seeder
         $comment->save();
     }
 
-    private function createCommentsForVoucher() :void
+    private function createCommentsForVoucher():void
     {
         $voucher = Voucher::first();
 

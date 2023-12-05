@@ -9,23 +9,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Product extends Model
 {
-    use HasFactory;
-
-    protected $table = 'products';
-    protected $primaryKey = 'id';
-    protected $keyType = 'string';
+    protected $table = "products";
+    protected $primaryKey = "id";
+    protected $keyType = "string";
     public $incrementing = false;
     public $timestamps = false;
+
+    protected $hidden = [
+        'category_id'
+    ];
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, "category_id", "id");
     }
-    
-    public function reviews() : HasMany
+
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class, "product_id", "id");
     }
@@ -57,5 +60,10 @@ class Product extends Model
     {
         return $this->morphOne(Comment::class, "commentable")
             ->oldest("created_at");
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, "taggable");
     }
 }

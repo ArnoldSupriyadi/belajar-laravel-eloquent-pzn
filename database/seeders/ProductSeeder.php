@@ -27,5 +27,6 @@ class ProductSeeder extends Seeder
         $product2->category_id = "FOOD";
         $product2->price = 200;
         $product2->save();
+        
     }
 }

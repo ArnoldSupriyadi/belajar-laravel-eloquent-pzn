@@ -44,4 +44,5 @@ class Voucher extends Model
     {
         return $this->morphToMany(Tag::class, "taggable");
     }
+    
 }

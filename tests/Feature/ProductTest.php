@@ -91,4 +91,23 @@ class ProductTest extends TestCase
         self::assertNull($comment);
     }
 
+    public function testManyToManyPolymorphic()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, TagSeeder::class]);
+
+        $product = Product::find("1");
+        $tags = $product->tags;
+        self::assertNotNull($tags);
+        self::assertCount(1, $tags);
+
+        foreach ($tags as $tag){
+            self::assertNotNull($tag->id);
+            self::assertNotNull($tag->name);
+
+            $vouchers = $tag->vouchers;
+            self::assertNotNull($vouchers);
+            self::assertCount(1, $vouchers);
+        }
+    }
+
 }

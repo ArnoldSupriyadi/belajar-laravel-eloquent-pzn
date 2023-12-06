@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Seeders\ImageSeeder;
+use Database\Seeders\WalletSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +22,7 @@ class Customer extends Model
     protected $keyType = "string";
     public $incrementing = false;
     public $timestamps = false;
+    protected $with = ["wallet"];
 
     public function wallet(): HasOne
     {
@@ -51,8 +54,9 @@ class Customer extends Model
             ->using(Like::class);
      }
 
-     public function image() :MorphOne
-     {
+    public function image() :MorphOne
+    {
         return $this->morphOne(Image::class, "imageable");
-     }
+    }
+    
 }

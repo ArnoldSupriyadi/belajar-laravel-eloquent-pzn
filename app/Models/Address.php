@@ -9,8 +9,11 @@ class Address
     public string $country;
     public string $postalCode;
 
-    public function __construct()
+    public function __construct(string $street, string $city, string $country, string $postal_code)
     {
-        
+        $this->street = $street;
+        $this->city = $city;
+        $this->country = $country;
+        $this->postal_code = $postal_code;
     }
 }
